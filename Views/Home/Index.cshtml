@@ -1,8 +1,23 @@
-﻿@{
+﻿@using SklepAI.Models.ViewModels
+@using Microsoft.AspNetCore.Identity
+@model IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (Model.ShowSeedDatabaseButton && User.Identity.IsAuthenticated)
+    {
+        <form asp-action="SeedDatabase">
+            <button type="submit">Seed database</button>
+        </form> 
+    }
+    <div class="list-group">
+        @foreach (var item in Model.ProductRepository.Products)
+        {
+            <a href="#" class="list-group-item list-group-item-action">@item.Description</a>
+        }
+    </div>
 </div>

@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SklepAI.Data;
+using SklepAI.EFRepositoryControllers;
+using SklepAI.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,8 @@ namespace SklepAI
                 options.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             services.AddControllersWithViews();
         }

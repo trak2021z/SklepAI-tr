@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SklepAI.Interfaces
 {
-    interface IProductRepository
+    public interface IProductRepository
     {
         IQueryable<Product> Products { get; }
         void SaveProduct(Product product);
