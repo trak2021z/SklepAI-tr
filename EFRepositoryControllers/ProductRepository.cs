@@ -12,9 +12,9 @@ namespace SklepAI.EFRepositoryControllers
     {
         private readonly ApplicationDbContext context;
 
-        public ProductRepository(ApplicationDbContext ctx)
+        public ProductRepository(ApplicationDbContext context)
         {
-            context = ctx;
+            this.context = context;
         }
         public IQueryable<Product> Products => context.Products;
 

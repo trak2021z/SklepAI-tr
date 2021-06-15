@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SklepAI.Interfaces;
 using SklepAI.Models;
@@ -36,7 +37,7 @@ namespace SklepAI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        [Authorize]
         public IActionResult SeedDatabase([FromServices] IProductRepository productRepository)
         {
             productRepository.SaveProduct(new Product
@@ -46,7 +47,7 @@ namespace SklepAI.Controllers
                 Price = 12.50M,
                 Category = "Kategoria"
             });
-            return RedirectToAction("Index", "Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
