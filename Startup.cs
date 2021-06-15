@@ -44,7 +44,8 @@ namespace SklepAI
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>()
+            }).AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
             services.AddTransient<IProductRepository, ProductRepository>();
@@ -81,6 +82,8 @@ namespace SklepAI
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            ApplicationDbContext.InitialSeed(app.ApplicationServices).Wait();
         }
     }
 }

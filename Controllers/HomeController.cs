@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SklepAI.Interfaces;
@@ -48,6 +49,7 @@ namespace SklepAI.Controllers
                 Category = "Kategoria"
             });
             return RedirectToAction(nameof(Index));
-        }
+        }  
+    
     }
 }

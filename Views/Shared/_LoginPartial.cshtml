@@ -15,7 +15,7 @@
                     <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a></li>
                     @if (User.IsInRole("Admin"))
                     {
-                        <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a></li>
+                        <li><a class="dropdown-item" asp-page="/Admin/Index" title="Manage">Admin panel</a></li>
                     }
                     <li><hr class="dropdown-divider"></li>
                     <li><button type="submit" class="dropdown-item">Logout</button></li>
@@ -31,7 +31,7 @@ else
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
         <li>
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a asp-controller="Account" asp-action="Login" asp-route-returnUrl=@ViewContext.HttpContext.Request.PathAndQuery() class="nav-link">Login</a>
         </li>
     </ul>
 }
