@@ -1,0 +1,8 @@
+﻿@model Product
+
+<form id="@Model.ProductID" asp-action="Details" asp-controller="Product" method="post" class="col-md-5 col-lg-4 col-xl-4 pr-0 position-static">
+    <input type="hidden" asp-for="ProductID" />
+    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+    <input type="image" src="@Model.ImgUrl?.Split(',')[0]" class="img-fluid img-thumbnail" alt="submit">
+</form>
+

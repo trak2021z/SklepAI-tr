@@ -7,21 +7,9 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    @if (Model.ShowSeedDatabaseButton && SignInManager.IsSignedIn(User))
-    {
-        <form asp-action="SeedDatabase">
-            <button type="submit">Seed database</button>
-        </form>
-    }
-    <h1>TestDropDownList</h1>
-    <form asp-action="Create">
-        <button type="submit">Create</button>
+    <h1 class="display-4">Welcome</h1> 
+    <form enctype="multipart/form-data" method="post" asp-controller="Home" asp-action="ImportData">
+        <input type="file" name="postedFile" />
+        <input type="submit" class="btn" value="Import" /> 
     </form>
-    <div class="list-group">
-        @foreach (var item in Model.ProductRepository.Products)
-        {
-            <a href="#" class="list-group-item list-group-item-action">@item.Description</a>
-        }
-    </div>
 </div>

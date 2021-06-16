@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SklepAI.Interfaces;
 using SklepAI.Models;
 using SklepAI.Models.ViewModels;
+using SklepAI.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -51,5 +53,17 @@ namespace SklepAI.Controllers
             return RedirectToAction(nameof(Index));
         }  
     
+        [HttpPost]
+        public IActionResult ImportData([FromServices] IProductRepository productRepository, IFormFile postedFile)
+        {
+            var parser = new CsvParser(postedFile.OpenReadStream());
+            var productList = parser.Parse();
+
+            foreach (var item in productList.Take(50))
+            {
+                productRepository.SaveProduct(item);
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
