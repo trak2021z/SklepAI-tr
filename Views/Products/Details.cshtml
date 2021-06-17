@@ -10,24 +10,23 @@
     </h4>
     <div class="row">
         <div class="col-sm">
-
             <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 @{
                     var images = Model.Selected.ImgUrl?.Split(',');
                 }
-                <ol class="carousel-indicators">
+                <div class="carousel-indicators">
                     @for (int i = 0; i < images?.Length; i++)
                     {
                         @if (i == 0)
                         {
-                            <li type="button" data-target="#carouselExampleIndicators" data-slide-to=@i class="active" aria-current="true"></li>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=@i class="active" aria-current="true"></button>
                         }
                         else
                         {
-                            <li type="button" data-target="#carouselExampleIndicators" data-slide-to=@i></li>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=@i></button>
                         }
                     }
-                </ol>
+                </div>
                 <div class="carousel-inner">
                     @for (int i = 0; i < images?.Length; i++)
                     {
@@ -45,37 +44,69 @@
                         }
                     }
                 </div>
-                <a class="carousel-control-prev" role="button" data-target="#carouselExampleIndicators" data-slide="prev">
+                <a class="carousel-control-prev" role="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="visually-hidden">Previous</span>
                 </a>
-                <a class="carousel-control-next" role="button" data-target="#carouselExampleIndicators" data-slide="next">
+                <a class="carousel-control-next" role="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only dark">Next</span>
+                    <span class="visually-hidden">Next</span>
                 </a>
             </div>
         </div>
         <div class="col-sm">
-
+            <p class="h4">Description: </p>
+            <p>@Model.Selected.Description</p>
         </div>
         <div class="col-sm">
-
+            <h3>Kolory</h3>
+            <div class="row">
+                @foreach (string color in Model.Products.Select(p => p.Colour).Distinct())
+                {
+                    var productsInColor = Model.Products.Where(p => p.Colour == color);
+                    var chosenProduct = productsInColor.First();
+                    foreach (var product in productsInColor)
+                    {
+                        if (product.Size == Model.Selected.Size)
+                        {
+                            chosenProduct = product;
+                        }
+                    }
+                    <div class="col-sm">
+                        <form id="@chosenProduct.ProductID" asp-action="Details" method="post">
+                            <input type="hidden" name="productId" value="@chosenProduct.ProductID" />
+                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                            <input type="submit" class="btn btn-outline-secondary" value="@color" />
+                        </form>
+                    </div>
+                }
+            </div>
+            <h3>Rozmiary</h3>
+            <div class="row">
+                @foreach (string size in Model.Products.Select(p => p.Size).Distinct())
+                {
+                    var productsInSize = Model.Products.Where(p => p.Size == size);
+                    var chosenProduct = productsInSize.First();
+                    foreach (var product in productsInSize)
+                    {
+                        if (product.Colour == Model.Selected.Colour)
+                        {
+                            chosenProduct = product;
+                        }
+                    }
+                    <div class="col-sm">
+                        <form id="@chosenProduct.ProductID" asp-action="Details" method="post">
+                            <input type="hidden" name="productId" value="@chosenProduct.ProductID" />
+                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                            <input type="submit" class="btn btn-outline-secondary" value="@size" />
+                        </form>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-    <p>@Model.Selected.Description</p>
 
-    <h3>Opcje</h3>
-    <div class="row form-group">
-        @foreach (Product item in Model.Products)
-        {
-            <form id="@item.ProductID" asp-action="Details" method="post">
-                <input type="hidden" name="productId" value="@item.ProductID" />
-                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
-                <input type="submit" class="page-link" value="Rozmiar: @item.Size  Kolor: @item.Colour" />
-            </form>
-        }
-    </div>
-    <div class="row align-content-start">
+    <div class="row">
         <a class="row alert float-right">Dostępne @Model.Selected.Quantity sztuk.</a>
     </div>
     <form id="@Model.Selected.ProductID"
