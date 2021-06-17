@@ -54,7 +54,17 @@ namespace SklepAI.Controllers
                 CurrentCategory = category
             });
         }
-
+        public ViewResult Details(int productId, string returnUrl)
+        {
+            Product product = productRepository.Products.FirstOrDefault(p => p.ProductID == productId);
+            return View(new ProductDetailsViewModel
+            {
+                Products = productRepository.Products
+                .Where(p => p.Name == product.Name),
+                Selected = product,
+                ReturnUrl = returnUrl
+            });
+        }
         public IActionResult Index()
         {
             return View();
