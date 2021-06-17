@@ -15,7 +15,7 @@
                     <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a></li>
                     @if (User.IsInRole("Admin"))
                     {
-                        <li><a class="dropdown-item" asp-page="/Admin/Index" title="Manage">Admin panel</a></li>
+                        <li><a class="dropdown-item" href="/Admin/Index" title="Manage">Admin panel</a></li>
                     }
                     <li><hr class="dropdown-divider"></li>
                     <li><button type="submit" class="dropdown-item">Logout</button></li>

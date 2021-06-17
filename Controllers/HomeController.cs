@@ -29,41 +29,11 @@ namespace SklepAI.Controllers
         {
             return View(new IndexViewModel(productRepository));
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        [Authorize]
-        public IActionResult SeedDatabase([FromServices] IProductRepository productRepository)
-        {
-            productRepository.SaveProduct(new Product
-            {
-                Description = "Opis",
-                Name = "Nazwa",
-                Price = 12.50M,
-                Category = "Kategoria"
-            });
-            return RedirectToAction(nameof(Index));
-        }  
-    
-        [HttpPost]
-        public IActionResult ImportData([FromServices] IProductRepository productRepository, IFormFile postedFile)
-        {
-            var parser = new CsvParser(postedFile.OpenReadStream());
-            var productList = parser.Parse();
-
-            foreach (var item in productList.Take(50))
-            {
-                productRepository.SaveProduct(item);
-            }
-            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -19,11 +19,8 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Główna</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Prywatnosć</a>
-                        </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li> 
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -31,6 +28,7 @@
         </nav>
     </header>
     <div class="container">
+    <p class="h2">@ViewBag.Title</p>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
