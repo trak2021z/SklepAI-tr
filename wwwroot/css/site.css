@@ -35,6 +35,10 @@ html {
   }
 }
 
+.custom-background {
+    background: rgb(89,88,87);
+    background: linear-gradient(0deg, rgba(89,88,87,0.8155637254901961) 0%, rgba(242,242,242,0.7371323529411764) 54%);
+}
 .border-top {
   border-top: 1px solid #e5e5e5;
 }

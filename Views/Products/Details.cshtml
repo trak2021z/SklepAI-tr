@@ -5,9 +5,10 @@
     ViewBag.Title = Model.Selected.Name;
 }
 <div class="jumbotron container">
-    <h4>
-        @Model.Selected.Name @Model.Selected.Size @Model.Selected.Colour
-    </h4>
+    <p class="h5">
+       Size: @Model.Selected.Size 
+       Color: @Model.Selected.Colour
+    </p>
     <div class="row">
         <div class="col-sm">
             <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">

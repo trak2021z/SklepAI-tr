@@ -13,12 +13,13 @@
         }
     </div>
 
-    <div page-model="@Model.PagingInfo"
-         page-action="List"
-         page-classes-enabled="true"
-         page-class="btn p-1"
-         page-class-normal="nav-link"
-         page-class-selected="nav-link disabled"
-         page-url-category="@Model.CurrentCategory"
-         class="row float-left"></div>
+    <ul page-model="@Model.PagingInfo"
+        page-action="List"
+        page-classes-enabled="true"
+        page-class="page-item"
+        page-class-normal=""
+        page-class-selected="page-item active"
+        page-url-category="@Model.CurrentCategory"
+        page-count="4"
+        class="pagination"></ul>
 </div>
