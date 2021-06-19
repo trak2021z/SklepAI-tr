@@ -1,10 +1,7 @@
 ﻿using SklepAI.Data;
 using SklepAI.Interfaces;
 using SklepAI.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SklepAI.EFRepositoryControllers
 {

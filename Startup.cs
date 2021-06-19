@@ -44,6 +44,7 @@ namespace SklepAI
             .AddDefaultTokenProviders();
 
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IShipmentRepository, ShipmentRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => SessionCart.GetCart(sp));
             services.AddSession();
