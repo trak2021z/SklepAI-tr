@@ -3,11 +3,11 @@
 <form class="form-inline my-2 my-lg-0">
     @if (Model.Lines.Count() > 0)
     {
-        <small class="navbar-text p-2">
-            <b>Twój koszyk:</b>
-            @Model.Lines.Sum(x => x.Quantity) produkt(y)
-            @Model.ComputeTotalValue().ToString("c")
-        </small>
+    <small class="navbar-text p-2">
+        <b>Cart:</b>
+        @Model.Lines.Sum(x => x.Quantity)@(Model.Lines.Sum(x => x.Quantity)<2?" item":" items") 
+        @Model.ComputeTotalValue().ToString("c")
+    </small>
     }
 
     <a style="font-size: 2em; padding-right: 1em; color: #198754;"

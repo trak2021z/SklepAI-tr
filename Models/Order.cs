@@ -16,25 +16,24 @@ namespace SklepAI.Models
 
         [BindNever]
         public ICollection<CartLine> Lines { get; set; }
-        [Required(ErrorMessage = "Proszę podać imię.")]
+        [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Proszę podać pierwszy wiersz adresu.")]
+        [Required]
         public string Street { get; set; }
         [Required]
         public string Building { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        [Required(ErrorMessage = "Proszę podać nazwę miasta.")]
+        [Required]
         public string City { get; set; }
-        [Required(ErrorMessage = "Proszę podać nazwę województwa.")]
+        [Required]
         public string State { get; set; }
         [Required]
         public string Zip { get; set; }
-        [Required(ErrorMessage = "Proszę podać nazwę kraju.")]
-        public string Country { get; set; }
-
+        [Required]
+        public string Country { get; set; } 
         public bool GiftWrap { get; set; }
         [BindNever]
         public bool Shipped { get; set; }

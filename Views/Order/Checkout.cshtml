@@ -1,0 +1,59 @@
+﻿@model OrderViewModel
+
+<h2>Shipment details</h2>
+<p>Please fill your data.</p>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Checkout" method="post" class="justify-content-start">
+    <h3>Nabywca</h3>
+    <div class="row justify-content-start">
+        <div class="form-text col-md-4">
+            <input placeholder="First Name" asp-for="Order.FirstName" class="form-control" />
+        </div>
+        <div class="form-text col-md-4">
+            <input placeholder="Last Name" asp-for="Order.LastName" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="form-text col-md-8">
+            <input placeholder="Phone number" asp-for="Order.PhoneNumber" class="form-control" />
+        </div>
+    </div>
+    <h3>Adres</h3>
+    <div class="row justify-content-start">
+        <div class="form-text col-md-4">
+            <input placeholder="Street" asp-for="Order.Street" class="form-control" />
+        </div>
+        <div class="form-text col-md-4">
+            <input placeholder="Building" asp-for="Order.Building" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="form-text col-md-4">
+            <input placeholder="Zip code" asp-for="Order.Zip" class="form-control" />
+        </div>
+        <div class="form-text col-md-4">
+            <input placeholder="City" asp-for="Order.City" class="form-control" />
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="form-text col-md-4">
+            <input placeholder="State" asp-for="Order.State" class="form-control" />
+        </div>
+        <div class="form-text col-md-4">
+            <input placeholder="Country" asp-for="Order.Country" class="form-control" />
+        </div>
+    </div>
+    <h3>Shipment methods</h3>
+    <select asp-for="Order.ShipmentId" asp-items="@(Model.Shipments);">
+        <option disabled selected value="">Choose one</option>
+    </select>
+    <div class="checkbox">
+        <label>
+            <input asp-for="Order.GiftWrap" /> As a gift?
+        </label>
+    </div>
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Order" />
+    </div>
+</form> 

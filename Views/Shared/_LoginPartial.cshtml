@@ -12,6 +12,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
                     <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a></li>
+                    <li><a class="dropdown-item" asp-controller="Order" asp-action="List" title="Manage">My Orders</a></li>
                     @if (User.IsInRole("Admin"))
                     {
                         <li><a class="dropdown-item" href="/Admin/Index" title="Manage">Admin panel</a></li>

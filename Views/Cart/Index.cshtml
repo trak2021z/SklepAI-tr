@@ -1,6 +1,6 @@
 ﻿@model CartIndexViewModel
 
-<h2>Twój koszyk</h2>
+<h2>Your cart</h2>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -46,7 +46,7 @@
     <a class="btn btn-primary" asp-controller="Products" asp-action="List">Continue shopping</a>
     @if (Model.Cart.Lines.Count() == 0)
     {
-        <input type="button" class="btn btn-primary" disabled value="Złóż zamówienie" />
+        <input type="button" class="btn btn-primary" disabled value="Order" />
     }
     else
     {

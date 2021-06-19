@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SklepAI.Interfaces;
 using SklepAI.Models;
@@ -10,18 +11,31 @@ using System.Threading.Tasks;
 
 namespace SklepAI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private IProductRepository productRepository;
-        public AdminController(IProductRepository productRepository)
+        private readonly IShipmentRepository shipmentRepository;
+        private readonly IOrderRepository orderRepository;
+        public AdminController(
+            IProductRepository productRepository,
+            IShipmentRepository shipmentRepository,
+            IOrderRepository orderRepository)
         {
             this.productRepository = productRepository;
+            this.shipmentRepository = shipmentRepository;
+            this.orderRepository = orderRepository;
         }
 
         public IActionResult Index()
         {
             return View(productRepository.Products.AsEnumerable());
         }
+        public IActionResult Orders()
+        {
+            return View(orderRepository.Orders.AsEnumerable());
+        }
+
 
 
         #region Product Methods 
@@ -67,6 +81,53 @@ namespace SklepAI.Controllers
                 productRepository.SaveProduct(item);
             }
             return RedirectToAction(nameof(Index));
+        }
+        #endregion
+        #region ShipmentMethods 
+        public IActionResult Shipments()
+        {
+            return View(shipmentRepository.Shipments.AsEnumerable());
+        }
+
+        public ViewResult CreateShipment() => View("EditShipment", new Shipment());
+        public ViewResult EditShipment(int shipmentId) => View(shipmentRepository.Shipments.FirstOrDefault(s => s.ShipmentId == shipmentId));
+
+        [HttpPost]
+        public IActionResult EditShipment(Shipment shipment)
+        {
+            if (ModelState.IsValid)
+            {
+                shipmentRepository.SaveShipment(shipment);
+                TempData["message"] = $"Saved {shipment.Description}.";
+                return RedirectToAction(nameof(Shipments));
+            }
+            else
+            {
+                return View(shipment);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteShipment(int shipmentId)
+        {
+            Shipment deletedShip = shipmentRepository.DeleteShipment(shipmentId);
+            if (deletedShip != null)
+            {
+                TempData["message"] = $"Deleted {deletedShip.Description}.";
+            }
+            return RedirectToAction("Shipments");
+        }
+        #endregion
+        #region Order Methods
+        [HttpPost]
+        public IActionResult DeleteOrder(int orderID)
+        {
+            Order order = orderRepository.GetOrder(orderID);
+            if (order != null)
+            {
+                orderRepository.DeleteOrder(orderID);
+            }
+            return RedirectToAction(nameof(Orders));
         }
         #endregion
     }

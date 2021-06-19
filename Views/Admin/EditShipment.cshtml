@@ -1,0 +1,22 @@
+﻿@model Shipment
+@{
+    ViewBag.Title = "Shipment"; 
+}
+
+<form asp-action="EditShipment" method="post">
+    <input type="hidden" asp-for="ShipmentId" />
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <div><span asp-validation-for="Description" class="text-danger"></span></div>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price">Price</label>
+        <div><span asp-validation-for="Price" class="text-danger"></span></div>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

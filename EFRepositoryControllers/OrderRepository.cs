@@ -1,4 +1,5 @@
-﻿using SklepAI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SklepAI.Data;
 using SklepAI.Interfaces;
 using SklepAI.Models;
 using System.Linq;
@@ -14,7 +15,10 @@ namespace SklepAI.EFRepositoryControllers
             this.context = context;
         }
 
-        public IQueryable<Order> Orders => context.Orders;
+        public IQueryable<Order> Orders => 
+            context.Orders.Include(o => o.Lines)
+            .ThenInclude(l => l.Product)
+            .Include(o => o.Shipment);
 
         public Order DeleteOrder(int orderID)
         {

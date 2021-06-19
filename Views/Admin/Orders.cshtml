@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewBag.Title = "Orders";
+}
+<nav class="navbar navbar-light bg-light">
+    <form class="container-fluid justify-content-start">
+        <a asp-action="Index" class="btn btn-outline-success me-1" type="button">Products</a>
+        <a asp-action="Orders" class="btn btn-outline-secondary me-1" type="button">Orders</a>
+        <a asp-action="Shipments" class="btn btn-outline-success me-1" type="button">Shipments</a>
+    </form>
+</nav>
+ 
+@if (Model.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Zip code</th>
+                <th colspan="2">Description</th>
+                <th>Pay status</th>
+                <th>Realization</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        @foreach (Order o in Model)
+        {
+            <tr>
+                <td>@o.FirstName @o.LastName @o.OrderID</td>
+                <td>@o.Zip</td>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>@o.PaymentStatus</th>
+                <th>
+                    @if (o.Shipped)
+                    {
+                        <a class="text-success">Sended</a>
+                    }
+                    else
+                    {
+                        <a class="text-danger">Not sended</a>
+                    }
+                </th>
+                <td class="form-group d-inline-flex justify-content-around">
+                    @if (o.Shipped != true && User.IsInRole("Admins"))
+                    {
+                        <form asp-action="MarkShipped" method="post" class="float-left pr-1">
+                            <input type="hidden" name="orderId" value="@o.OrderID" />
+                            <button type="submit" class="btn btn-sm btn-danger">Completed</button>
+                        </form>
+                    }
+                    @if (o.PaymentStatus == null)
+                    {
+                        <form asp-action="Pay" method="post">
+                            <input type="hidden" name="orderId" value="@o.OrderID" />
+                            <button type="submit" class="btn btn-sm btn-primary">Pay</button>
+                        </form>
+                    }
+                    <form asp-action="DeleteOrder" method="post" class="float-right pl-1">
+                        <input type="hidden" name="orderId" value="@o.OrderID" />
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+
+                </td>
+            </tr>
+            @foreach (CartLine line in o.Lines)
+            {
+                <tr>
+                    <td colspan="2" class="p-1"><img src="@line.Product.ImgUrl.Split(",")[0]" style="width:auto; height:128px; padding:1px" class="img-fluid " /></td>
+                    <td>@line.Product.Name</td>
+                    <td>@line.Quantity</td>
+                    <td colspan="3"></td>
+                </tr>
+            }
+            <tr>
+                <td colspan="7"></td>
+            </tr>
+        }
+
+
+    </table>
+}
+else
+{
+    <div class="text-center">Brak zamówień</div>
+}

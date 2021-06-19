@@ -1,0 +1,55 @@
+﻿@model Order
+
+@{
+    ViewBag.Title = "Podsumowanie";
+    Layout = "_Layout";
+}
+
+<div class="bg-dark text-white  p-2">
+    <h4>@ViewBag.Title</h4>
+</div>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Produkt</th>
+        <th>Opis</th>
+        <th>Cena jednostkowa</th>
+        <th>Ilość</th>
+        <th>Razem</th>
+    </tr>
+    @foreach (CartLine line in Model.Lines)
+    {
+        <tr>
+            <td>
+                @{
+                    var temp = line.Product.ImgUrl?.Split(',');
+                    if (temp != null)
+                    {
+                        <img src="@temp[0]" class="img-fluid, img-thumbnail" width="128" />
+                    }
+                }
+            </td>
+            <td><a class="text-center">@line.Product.Description</a></td>
+            <td>@line.Product.Price.ToString("c")</td>
+            <td>@line.Quantity</td>
+            @{
+                decimal partialCost = line.Quantity * line.Product.Price;
+            }
+            <td>@partialCost</td>
+        </tr>
+    }
+    <tr>
+        <td colspan="3" class="text-right">Koszty dostawy:</td>
+        <td colspan="2" class="text-right">@Model.Shipment.Price.ToString("c")</td>
+    </tr>
+    <tr>
+        <td colspan="3" class="text-right">Razem produkty brutto:</td>
+        <td colspan="2" class="text-right">@((Model.Lines.Sum(cl => cl.Product.Price * cl.Quantity)+ Model.Shipment.Price).ToString("c"))</td>
+    </tr>
+
+</table>
+
+<div class="p-1 m-1">
+    <img src="https://www.dotpay.pl/developer/doc/api_seller/pl/images/dotpay_logo.png" class="img-fluid" width="200" />
+    <a class="btn btn-primary" asp-action="Pay" asp-controller="Order" asp-route-orderId="@Model.OrderID">Pay</a>
+</div>
+
