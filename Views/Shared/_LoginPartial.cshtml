@@ -7,11 +7,10 @@
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a href="#" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    @UserManager.GetUserName(User)
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark">
+                <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    @UserManager.GetUserName(User) 
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
                     <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a></li>
                     @if (User.IsInRole("Admin"))
                     {
