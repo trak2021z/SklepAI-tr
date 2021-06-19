@@ -3,7 +3,10 @@
 @{
     Layout = "_Layout";
 }
-
+<form asp-action="Search" asp-controller="Products" class="input-group mb-3">
+    <input class="form-control" name="search" type="search" placeholder="Product name" aria-label="Search">
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+</form>
 <div class="jumbotron" style="padding-top:2rem">
     <h4>@Model.CurrentCategory</h4>
     <div class="row">

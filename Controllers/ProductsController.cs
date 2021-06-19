@@ -69,5 +69,21 @@ namespace SklepAI.Controllers
         {
             return View();
         }
+        public ViewResult Search(string search, int productPage = 1)
+        {
+            return View(new ProductsListViewModel
+            {
+                Products = productRepository.Products.Where(p => p.Description.Contains(search))
+                .OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize)
+                    .Take(pageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = productPage,
+                    ItemsPerPage = pageSize,
+                    TotalItems = productRepository.Products.Where(p => p.Description.Contains(search)).Count()
+                },
+                SearchString = search
+            });
+        }
     }
 }
