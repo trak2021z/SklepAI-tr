@@ -1,21 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SklepAI.Data;
 using SklepAI.EFRepositoryControllers;
 using SklepAI.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+using SklepAI.Models;
 namespace SklepAI
 {
     public class Startup
@@ -50,7 +44,10 @@ namespace SklepAI
             .AddDefaultTokenProviders();
 
             services.AddTransient<IProductRepository, ProductRepository>();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => SessionCart.GetCart(sp));
+            services.AddSession();
+            services.AddMvc();
             services.AddControllersWithViews();
         }
 
@@ -70,7 +67,7 @@ namespace SklepAI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

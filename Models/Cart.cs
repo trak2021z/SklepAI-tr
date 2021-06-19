@@ -7,7 +7,7 @@ namespace SklepAI.Models
 {
     public class Cart
     {
-        private List<CartLine> lineCollection = new List<CartLine>();
+        private readonly List<CartLine> lineCollection = new List<CartLine>();
 
         public virtual void AddItem(Product product, int quantity)
         {

@@ -19,12 +19,7 @@ namespace SklepAI.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+         
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
